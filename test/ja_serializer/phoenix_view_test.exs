@@ -5,8 +5,10 @@ defmodule JaSerializer.PhoenixViewTest do
 
   defmodule PhoenixExample.ArticleView do
     use JaSerializer.PhoenixView
-    attributes([:title])
+    attributes([:title, :private])
     location("/api/articles")
+
+    defp private(_a), do: "private"
   end
 
   @view PhoenixExample.ArticleView
@@ -105,9 +107,14 @@ defmodule JaSerializer.PhoenixViewTest do
     assert Map.has_key?(json["data"], "attributes")
   end
 
+  test "render conn, show.json-api, data: model - w/ private function", c do
+    json = @view.render("show.json-api", conn: %{}, data: c[:m1])
+    assert json["data"]["attributes"]["private"] == "private"
+  end
+
   test "render conn, show.json-api, data: nil" do
     json = @view.render("show.json-api", conn: %{}, data: nil)
-    assert json['data'] == nil
+    assert json["data"] == nil
   end
 
   # This should be deprecated in the future
