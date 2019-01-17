@@ -6,7 +6,7 @@ defimpl JaSerializer.Formatter, for: JaSerializer.Builder.TopLevel do
   def format(struct = %{errors: nil}) do
     %{"data" => JaSerializer.Formatter.format(struct.data)}
     |> format_links(struct.links)
-    |> Utils.put_if_present("meta", JaSerializer.Formatter.format(struct.meta))
+    |> Utils.put_if_present("meta", Utils.deep_format_keys(struct.meta))
     |> Utils.put_if_present(
       "included",
       JaSerializer.Formatter.format(struct.included)
