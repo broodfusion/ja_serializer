@@ -13,7 +13,7 @@ defmodule JaSerializer.JsonApiSpec.ResourceObjectTest do
       "attributes": {
         "title": "Rails is Omakase"
       },
-      "meta": {"search_match": "Omakase"},
+      "meta": {"search-match": "Omakase"},
       "relationships": {
         "author": {
           "links": {

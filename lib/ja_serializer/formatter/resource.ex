@@ -4,6 +4,7 @@ defimpl JaSerializer.Formatter, for: JaSerializer.Builder.ResourceObject do
   def format(resource) do
     relationships = Utils.array_to_hash(resource.relationships)
     links = Utils.array_to_hash(resource.links)
+    meta = Utils.deep_format_keys(resource.meta)
 
     json = %{
       "id" => to_string(resource.id),
@@ -19,7 +20,7 @@ defimpl JaSerializer.Formatter, for: JaSerializer.Builder.ResourceObject do
     |> Utils.put_if_present("links", links)
     |> Utils.put_if_present(
       "meta",
-      JaSerializer.Formatter.format(resource.meta)
+      meta
     )
   end
 end
